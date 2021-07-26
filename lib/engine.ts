@@ -1,5 +1,3 @@
-import * as fs from "fs";
-
 import { equals } from "./utils/regexp";
 
 import * as raw from "./raw";
@@ -51,7 +49,11 @@ export class Engine {
     }
 
     makeChangeSet(filePath: string, contentText?: string): ChangeSet {
-        const content: string = contentText != null ? contentText : fs.readFileSync(filePath, { encoding: "utf8" });
+        if (contentText == null) {
+            throw new Error("contentText is required");
+        }
+
+        const content: string = contentText;
 
         const re = /([^]*?)\n{2,}/g;
         const paragraphs: Paragraph[] = [];
@@ -114,7 +116,7 @@ export class Engine {
 
     replaceByRule(filePath: string, content?: string) {
         if (content == null) {
-            content = fs.readFileSync(filePath, { encoding: "utf8" });
+            throw new Error("content is required");
         }
         const changeSet = this.makeChangeSet(filePath, content);
         return changeSet.applyChangeSets(content);

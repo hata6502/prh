@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
 
@@ -20,9 +19,8 @@ export interface Options {
     disableImports?: boolean;
 }
 
-export function fromYAMLFilePath(configPath: string, opts: Options = {}): Engine {
-    const content = fs.readFileSync(configPath, { encoding: "utf8" });
-    return fromYAML(configPath, content, opts);
+export function fromYAMLFilePath(_configPath: string, _opts: Options = {}): Engine {
+    throw new Error("Not implemented");
 }
 
 export function fromYAML(configPath: string, yamlContent: string, opts: Options = {}): Engine {
@@ -109,15 +107,6 @@ export function fromRowConfigAsync(configPath: string, rawConfig: raw.Config, op
     }
 }
 
-export function getRuleFilePath(baseDir: string, configFileName = "prh.yml"): string | null {
-    const configFilePath = path.resolve(baseDir, configFileName);
-    if (fs.existsSync(configFilePath)) {
-        return configFilePath;
-    }
-
-    if (baseDir.length === path.dirname(baseDir).length) {
-        return null;
-    }
-
-    return getRuleFilePath(path.resolve(baseDir, "../"), configFileName);
+export function getRuleFilePath(_baseDir: string, _configFileName = "prh.yml"): string | null {
+    throw new Error("Not implemented");
 }
